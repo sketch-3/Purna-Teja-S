@@ -1,0 +1,369 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RailBook - Train Reservation</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f1f5f9;
+    color: #1e293b;
+}
+
+header {
+    background: #123b70;
+    color: white;
+    padding: 22px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 25px;
+}
+
+.hero {
+    background: linear-gradient(120deg, #123b70, #2476b9);
+    padding: 65px 8%;
+    color: white;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 38px;
+    margin-bottom: 12px;
+}
+
+.hero p {
+    font-size: 17px;
+}
+
+.container {
+    max-width: 1050px;
+    margin: -35px auto 40px;
+    padding: 0 20px;
+}
+
+.search-box {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px #0002;
+}
+
+.search-box h2 {
+    margin-bottom: 25px;
+    color: #123b70;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.field label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.field input, .field select {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+.search-btn {
+    width: 100%;
+    margin-top: 25px;
+    padding: 15px;
+    background: #f28c28;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.search-btn:hover {
+    background: #d97706;
+}
+
+.results {
+    margin-top: 35px;
+}
+
+.results h2 {
+    margin-bottom: 20px;
+}
+
+.train-card {
+    background: white;
+    padding: 22px;
+    margin-bottom: 18px;
+    border-radius: 10px;
+    box-shadow: 0 3px 12px #0001;
+}
+
+.train-info {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.train-card h3 {
+    color: #123b70;
+    margin-bottom: 10px;
+}
+
+.train-card p {
+    margin: 6px 0;
+    color: #64748b;
+}
+
+.book-btn {
+    background: #123b70;
+    color: white;
+    border: none;
+    padding: 11px 22px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.book-btn:hover {
+    background: #2476b9;
+}
+
+footer {
+    background: #123b70;
+    color: white;
+    text-align: center;
+    padding: 22px;
+    margin-top: 50px;
+}
+
+@media(max-width: 600px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    header {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    nav a {
+        margin: 0 7px;
+    }
+
+    .hero h1 {
+        font-size: 28px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🚆 RailBook</div>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#search">Book Ticket</a>
+        <a href="#results">Trains</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <h1>Your Journey Begins Here</h1>
+    <p>Search trains, check availability and reserve your tickets.</p>
+</section>
+
+<div class="container">
+
+<section class="search-box" id="search">
+    <h2>Search Train Tickets</h2>
+
+    <form id="trainForm">
+        <div class="form-grid">
+
+            <div class="field">
+                <label>From Station</label>
+                <input type="text" id="from"
+                placeholder="Enter departure station" required>
+            </div>
+
+            <div class="field">
+                <label>To Station</label>
+                <input type="text" id="to"
+                placeholder="Enter destination station" required>
+            </div>
+
+            <div class="field">
+                <label>Journey Date</label>
+                <input type="date" id="date" required>
+            </div>
+
+            <div class="field">
+                <label>Travel Class</label>
+                <select id="travelClass">
+                    <option>Sleeper (SL)</option>
+                    <option>AC 3 Tier (3A)</option>
+                    <option>AC 2 Tier (2A)</option>
+                    <option>AC First Class (1A)</option>
+                    <option>Second Sitting (2S)</option>
+                    <option>Chair Car (CC)</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label>Passengers</label>
+                <select id="passengers">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                </select>
+            </div>
+
+        </div>
+
+        <button type="submit" class="search-btn">
+            Search Trains
+        </button>
+    </form>
+</section>
+
+<section class="results" id="results">
+    <h2>Available Trains</h2>
+    <div id="trainResults">
+        <p>Enter your journey details to search for trains.</p>
+    </div>
+</section>
+
+</div>
+
+<footer>
+    <p>© 2026 RailBook | Train Reservation System</p>
+    <p>Designed for a simple and convenient booking experience.</p>
+</footer>
+
+<script>
+const form = document.getElementById("trainForm");
+
+document.getElementById("date").min =
+    new Date().toISOString().split("T")[0];
+
+form.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const from = document.getElementById("from").value;
+    const to = document.getElementById("to").value;
+    const date = document.getElementById("date").value;
+    const travelClass = document.getElementById("travelClass").value;
+    const passengers = document.getElementById("passengers").value;
+
+    if (from.toLowerCase() === to.toLowerCase()) {
+        alert("Departure and destination cannot be the same!");
+        return;
+    }
+
+    const results = document.getElementById("trainResults");
+
+    results.innerHTML = `
+        <div class="train-card">
+            <h3>Express Train - 12627</h3>
+            <div class="train-info">
+                <div>
+                    <h2>06:30 AM</h2>
+                    <p>${from}</p>
+                </div>
+                <div>
+                    <p>------ 8 Hours ------</p>
+                    <p>Express Service</p>
+                </div>
+                <div>
+                    <h2>02:30 PM</h2>
+                    <p>${to}</p>
+                </div>
+            </div>
+            <p>Journey Date: ${date}</p>
+            <p>Class: ${travelClass}</p>
+            <p>Passengers: ${passengers}</p>
+            <p>Availability: Demo - 45 Seats</p>
+            <h3>₹650 / Passenger</h3>
+            <button class="book-btn"
+                onclick="bookTicket('${from}', '${to}', '${date}')">
+                Book Now
+            </button>
+        </div>
+
+        <div class="train-card">
+            <h3>Superfast Express - 12845</h3>
+            <div class="train-info">
+                <div>
+                    <h2>09:00 AM</h2>
+                    <p>${from}</p>
+                </div>
+                <div>
+                    <p>------ 7 Hours ------</p>
+                    <p>Superfast Service</p>
+                </div>
+                <div>
+                    <h2>04:00 PM</h2>
+                    <p>${to}</p>
+                </div>
+            </div>
+            <p>Journey Date: ${date}</p>
+            <p>Class: ${travelClass}</p>
+            <p>Passengers: ${passengers}</p>
+            <p>Availability: Demo - 28 Seats</p>
+            <h3>₹850 / Passenger</h3>
+            <button class="book-btn"
+                onclick="bookTicket('${from}', '${to}', '${date}')">
+                Book Now
+            </button>
+        </div>
+    `;
+
+    document.getElementById("results").scrollIntoView({
+        behavior: "smooth"
+    });
+});
+
+function bookTicket(from, to, date) {
+    alert(
+        "Demo Booking Successful!\n\nFrom: " + from +
+        "\nTo: " + to +
+        "\nDate: " + date +
+        "\n\nThis is a demonstration. No actual ticket has been booked."
+    );
+}
+</script>
+
+</body>
+</html>
